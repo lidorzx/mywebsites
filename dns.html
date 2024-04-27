@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Bynet Lidor Site</title>
+    <title>DNS Server Configuration Guide</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,10 +12,25 @@
             background-color: #f0f0f0; /* Light gray background */
         }
         .container {
+            display: flex;
+            justify-content: space-between;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            text-align: center;
+        }
+        .sidebar {
+            flex: 0 0 200px;
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         header {
             background-color: #ff0000;
@@ -37,22 +52,6 @@
         nav a:hover {
             color: #3498db;
         }
-        section {
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 20px;
-            background-color: #fff; /* White background */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        section h2 {
-            color: #ff0000;
-            margin-bottom: 20px;
-        }
-        section p {
-            color: #666;
-            line-height: 1.6;
-        }
         footer {
             background-color: #000000;
             color: #fff;
@@ -66,51 +65,69 @@
 </head>
 <body>
     <header>
-        <h1>Bynet Lidor Site</h1>
+        <h1>DNS Server Configuration Guide</h1>
     </header>
+
     <nav>
-        <a href="index.html">Home</a>
-        <a href="http://privategpt.tlv.local:3000" target="_blank">PrivateGPT</a>
-        <a href="https://nextcloud.tlv.local" target="_blank">NextCloud</a>
-        <a href="https://10.160.11.250" target="_blank">UCS-MANAGER-250 ENV</a>
-        <a href="https://bynetprod.service-now.com/now/nav/ui/classic/params/target/home.do" target="_blank">ServiceNow</a>
-        <a href="http://vc.tlv.local" target="_blank">vCenter TLV</a>
+        <a href="#config">Configuration</a>
+        <a href="#zone-files">Zone Files</a>
+        <a href="#commands">Commands</a>
+        <a href="#rndc">RNDC Utility</a>
     </nav>
+
     <div class="container">
-        <section>
-            <h2>Dns Guide </h2>
-            <p>BIND DNS Server Installation and Configuration
+        <div class="sidebar">
+            <h2>Resources</h2>
+            <p>Useful links for DNS configuration and BIND documentation.</p>
+            <ul>
+                <li><a href="https://www.isc.org/bind/">ISC BIND Documentation</a></li>
+                <li><a href="https://www.dnscheck.co/">DNS Check Tool</a></li>
+            </ul>
+        </div>
 
-yum install bind bind-utils
+        <div class="main-content">
+            <section id="config">
+                <h2>DNS Server Configuration</h2>
+                <p>The main BIND configuration file is <code>/etc/named.conf</code>. Here's an overview of key settings:</p>
+                <ul>
+                    <li><code>listen-on port 53 { 127.0.0.1; };</code> - Defines where the server listens for requests.</li>
+                    <li><code>directory "/var/named";</code> - Specifies the directory for zone files.</li>
+                    <li><code>allow-query { localhost; };</code> - Restricts which clients can query the DNS server.</li>
+                    <li><code>dnssec-enable yes;</code> - Enables DNSSEC for security.</li>
+                </ul>
+            </section>
 
-/etc/named.conf = main configuration file
+            <section id="zone-files">
+                <h2>Zone Files</h2>
+                <p>Zone files contain DNS record definitions. Define your forward and reverse zones in <code>/etc/named.conf</code>:</p>
+                <pre><code>zone "example.com" {
+    type master;
+    file "example.com.db";
+};</code></pre>
+                <p>Ensure zone files are stored in the directory defined in the configuration.</p>
+            </section>
 
+            <section id="commands">
+                <h2>Useful Commands</h2>
+                <p>Use these commands to manage BIND and check DNS resolutions:</p>
+                <ul>
+                    <li><code>dig @localhost example.com</code> - Test DNS resolution.</li>
+                    <li><code>rndc reload</code> - Reload the DNS server.</li>
+                    <li><code>named-checkzone</code> - Validate zone files.</li>
+                </ul>
+            </section>
 
-For SysVinit systems
-
-chkconfig --list | grep named
-chkconfig --level [number of runlevel] named on
-
-service named start
-service named status
-
-For SystemD systems
-
-systemctl status named
-systemctl start named
-systemctl enable named
-
-dig @localhost google.com = To check the DNS
-resolving
-
-host www.microsoft.com localhost = To check the DNS resolving</p>
-        </section>
+            <section id="rndc">
+                <h2>RNDC Utility</h2>
+                <p>RNDC is used to control the BIND server. To generate a key for RNDC:</p>
+                <pre><code>rndc-confgen -r /dev/urandom -a</code></pre>
+                <p>Ensure to include the RNDC key in <code>/etc/named.conf</code> for proper integration.</p>
+            </section>
+        </div>
     </div>
-    <footer>
-        <h2>Dns Guide </h2>
-         <p>BIND DNS Server Installation and Configuration</p>
 
-        <p>&copy; 2024 Lidor Bynet Site. All rights reserved.</p>
+    <footer>
+        <p>&copy; 2024 DNS Configuration Guide. All rights reserved.</p>
     </footer>
 </body>
 </html>
