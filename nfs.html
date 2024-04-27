@@ -1,1 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFS Setup Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 0 0 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NFS Setup Guide</h1>
+    </header>
+
+    <nav>
+        <a href="#install">Installation</a>
+        <a href="#server">Server-Side Settings</a>
+        <a href="#client">Client-Side Mounting</a>
+        <a href="#monitoring">Monitoring NFS</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Useful Links</h2>
+            <ul>
+                <li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/system_design_guide/chapter-13-nfs" target="_blank">Red Hat NFS Guide</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <section id="install">
+                <h2>Installation</h2>
+                <p>To install the necessary packages for NFS, use the following commands on both the server and client sides:</p>
+                <pre><code>yum install nfs-utils rpcbind
+yum install nfs-utils-lib</code></pre>
+                <p>For older kernels, the <code>nfs-utils-lib</code> package might be required.</p>
+                <p>Ensure SELinux is disabled for NFS to work properly:</p>
+                <pre><code>setenforce 0
+getenforce</code></pre>
+            </section>
+
+            <section id="server">
+                <h2>Server-Side Settings</h2>
+                <p>To set up the NFS server, follow these steps:</p>
+                <ol>
+                    <li>Create a shared directory and set permissions:</li>
+                    <pre><code>mkdir /nfsshare
+chmod 777 /nfsshare</code></pre>
+
+                    <li>Configure the NFS export settings in <code>/etc/exports</code>:</li>
+                    <pre><code>/nfsshare hostname(rw, sync, root_squash)</code></pre>
+                    <p>The hostname can be an IP, network, subnet, or actual hostname. If you're using a hostname, ensure it's in <code>/etc/hosts</code> or resolved through a DNS server.</p>
+                    <p>Here's a brief explanation of some common options:</p>
+                    <ul>
+                        <li><code>rw</code> - Read and write permissions.</li>
+                        <li><code>ro</code> - Read-only permissions.</li>
+                        <li><code>sync</code> - Immediately synchronize changes.</li>
+                        <li><code>async</code> - Write changes periodically (not recommended).</li>
+                        <li><code>root_squash</code> - Prevent mapping the client root user on the server side.</li>
+                        <li><code>no_root_squash</code> - Allow mapping the client root on the server side.</li>
+                    </ul>
+                    <p>To specify an NFS user, create a user on both server and client with the same UID:</p>
+                    <pre><code>useradd -u 1101 -m nfsuser1</code></pre>
+                </ol>
+            </section>
+
+            <section id="client">
+                <h2>Client-Side Mounting</h2>
+                <p>To connect to an NFS share and mount it, use the following command:</p>
+                <pre><code>mount 192.168.0.1:/nfsshare /mnt/nfs</code></pre>
+                <p>To ensure the NFS share is mounted on boot, add an entry to <code>/etc/fstab</code>:</p>
+                <pre><code>192.168.0.1:/nfsshare /mnt/nfs          nfs    defaults  0 0</code></pre>
+            </section>
+
+            <section id="monitoring">
+                <h2>Monitoring NFS</h2>
+                <p>To monitor NFS shares, you can use these commands:</p>
+                <ul>
+                    <li><code>exportfs</code> - Shows current NFS exports.</li>
+                    <li><code>nfsstat -m</code> - Displays NFS statistics.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 NFS Setup Guide. All rights reserved.</p>
+    </footer>
+</body>
+</html>
 
