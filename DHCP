@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHCP Server Configuration Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 0 0 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DHCP Server Configuration Guide</h1>
+    </header>
+
+    <nav>
+        <a href="#config">Configuration</a>
+        <a href="#install">Installation</a>
+        <a href="#firewall">Firewall</a>
+        <a href="#leases">Leases</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Useful Links</h2>
+            <ul>
+                <li><a href="https://www.server-world.info/en/note?os=Rocky_Linux_8&p=dhcp&f=1" target="_blank">DHCP Configuration Guide</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <section id="config">
+                <h2>DHCP Configuration</h2>
+                <p>Here is a typical configuration for a DHCP server.</p>
+                <pre><code># specify domain name
+option domain-name "ospx.local";
+
+# specify DNS server's hostname or IP address
+option domain-name-servers maindc.ospx.local;
+
+# default lease time
+default-lease-time 600;
+
+# max lease time
+max-lease-time 7200;
+
+# this DHCP server is authoritative
+authoritative;
+
+# specify network address and subnet mask
+subnet 10.160.99.0 netmask 255.255.255.0 {
+    range 10.160.99.15 10.160.99.35;
+    option routers 10.160.99.254;
+    option subnet-mask 255.255.255.0;
+    option domain-name-servers 10.160.99.12;
+}
+
+host test {
+    hardware ethernet 00:0c:29:7e:e9:8b;
+    fixed-address 10.160.99.23;
+}</code></pre>
+            </section>
+
+            <section id="install">
+                <h2>DHCP Server Installation</h2>
+                <p>To install the DHCP server, use the following command:</p>
+                <pre><code>dnf -y install dhcp-server</code></pre>
+                <p>After installation, edit the DHCP configuration file:</p>
+                <pre><code>vi /etc/dhcp/dhcpd.conf</code></pre>
+                <p>Start the DHCP server and enable it to start on boot:</p>
+                <pre><code>systemctl enable --now dhcpd</code></pre>
+            </section>
+
+            <section id="firewall">
+                <h2>Firewall Configuration</h2>
+                <p>If Firewalld is running, allow DHCP service on port 67/UDP:</p>
+                <pre><code>firewall-cmd --add-service=dhcp
+firewall-cmd --runtime-to-permanent</code></pre>
+            </section>
+
+            <section id="leases">
+                <h2>DHCP Leases</h2>
+                <p>You can check the leased IP addresses in the following file:</p>
+                <pre><code>ll /var/lib/dhcpd
+cat /var/lib/dhcpd/dhcpd.leases</code></pre>
+                <p>The lease information contains details like start and end times, hardware addresses, and client hostnames.</p>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 DHCP Configuration Guide. All rights reserved.</p>
+    </footer>
+</body>
+</html>
