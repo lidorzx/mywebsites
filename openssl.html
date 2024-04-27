@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generation Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 0 0 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Certificate Generation Guide</h1>
+    </header>
+
+    <nav>
+        <a href="#ca">Generate CA Certificate</a>
+        <a href="#server">Generate Server Certificate</a>
+        <a href="#v3">Generate x509 v3 Extension</a>
+        <a href="#create-cert">Create Server Certificate</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="https://goharbor.io/docs/1.10/install-config/configure-https/" target="_blank">Harbor Docs</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <section id="ca">
+                <h2>Generate a Certificate Authority (CA) Certificate</h2>
+                <p>To create a CA certificate, follow these steps:</p>
+                <ol>
+                    <li>Generate a CA certificate private key:</li>
+                    <pre><code>openssl genrsa -out ca.key 4096</code></pre>
+
+                    <li>Generate a CA certificate with a self-signed public key:</li>
+                    <pre><code>openssl req -x509 -new -nodes -sha512 -days 3650 \
+-subj "/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=yourdomain.com" \
+-key ca.key \
+-out ca.crt</code></pre>
+                </ol>
+            </section>
+
+            <section id="server">
+                <h2>Generate a Server Certificate</h2>
+                <p>Generate the private key and certificate for a server:</p>
+                <ol>
+                    <li>Generate a server certificate private key:</li>
+                    <pre><code>openssl genrsa -out yourdomain.com.key 4096</code></pre>
+
+                    <li>Create a certificate signing request (CSR):</li>
+                    <pre><code>openssl req -sha512 -new \
+-subj "/C=CN/ST=Beijing/L=Beijing/O=example/OU=Personal/CN=yourhost.com" \
+-key yourdomain.com.key \
+-out yourdomain.com.csr</code></pre>
+                </ol>
+            </section>
+
+            <section id="v3">
+                <h2>Generate x509 v3 Extension File</h2>
+                <p>Create a v3 extension file for Subject Alternative Name (SAN) and x509 v3 extension requirements:</p>
+                <pre><code>cat > v3.ext <<-EOF
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1=yourdomain.com
+DNS.2=yourdomain
+DNS.3=hostname
+EOF</code></pre>
+            </section>
+
+            <section id="create-cert">
+                <h2>Create Server Certificate with v3 Extension</h2>
+                <p>Use the v3 extension file to generate a certificate for your server:</p>
+                <pre><code>openssl x509 -req -sha512 -days 3650 \
+-extfile v3.ext \
+-CA ca.crt -CAkey ca.key -CAcreateserial \
+-in yourdomain.com.csr \
+-out yourdomain.com.crt</code></pre>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Certificate Generation Guide. All rights reserved.</p>
+    </footer>
+</body>
+</html>
