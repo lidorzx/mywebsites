@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samba Setup Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 0 0 200px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Samba Setup Guide</h1>
+    </header>
+
+    <nav>
+        <a href="#install">Installation</a>
+        <a href="#server">Server-Side Configuration</a>
+        <a href="#client">Client-Side Connection</a>
+        <a href="#fstab">FSTAB Configuration</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Useful Links</h2>
+            <ul>
+                <li><a href="https://www.server-world.info/en/note?os=CentOS_7&p=samba" target="_blank">Samba Documentation</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <section id="install">
+                <h2>Installation</h2>
+                <p>Install the Samba packages on both server and client sides:</p>
+                <pre><code>yum install samba samba-client samba-common cifs-utils</code></pre>
+                <p>Ensure SELinux is disabled for Samba to function properly:</p>
+                <pre><code>setenforce 0
+getenforce</code></pre>
+            </section>
+
+            <section id="server">
+                <h2>Server-Side Configuration</h2>
+                <p>To create a Samba share, configure the following in <code>/etc/samba/smb.conf</code>:</p>
+                <pre><code>[TestShare]
+comment = TestShare
+path = /testshare
+guest ok = no
+writeable = yes</code></pre>
+                <p>Ensure the shared folder has appropriate permissions:</p>
+                <pre><code>chmod 777 /testshare</code></pre>
+                <p>Start and enable the Samba services:</p>
+                <pre><code>systemctl enable smb
+systemctl enable nmb
+systemctl start smb
+systemctl start nmb</code></pre>
+
+                <p>To add a Samba user and enable them for Samba:</p>
+                <pre><code>useradd testsmb
+passwd testsmb
+smbpasswd -a testsmb</code></pre>
+                <p>To map local users to Samba users, create a user mapping file:</p>
+                <pre><code>/etc/samba/usermap
+user = localuser</code></pre>
+                <p>In the Samba configuration, add the following line to use the user mapping:</p>
+                <pre><code>username map = /etc/samba/usermap</code></pre>
+            </section>
+
+            <section id="client">
+                <h2>Client-Side Connection</h2>
+                <p>To test the Samba connection and list available shares:</p>
+                <pre><code>smbclient -U testsmb -L 192.168.0.2</code></pre>
+                <p>To connect to a remote share with authentication:</p>
+                <pre><code>smbclient -U testsmb //192.168.0.2/testshare</code></pre>
+                <p>To mount the Samba share on a client machine:</p>
+                <pre><code>mount -t cifs -o username=testsmb //192.168.0.2/testshare /mnt/smb</code></pre>
+            </section>
+
+            <section id="fstab">
+                <h2>FSTAB Configuration</h2>
+                <p>To ensure the Samba share is mounted at boot, add an entry to <code>/etc/fstab</code>:</p>
+                <pre><code>//192.168.0.2 /mnt/smb cifs credentials=/path_to_credentials_file 0 0</code></pre>
+                <p>The credentials file should contain the following:</p>
+                <pre><code>username=testsmb
+password=password</code></pre>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Samba Setup Guide. All rights reserved.</p>
+    </footer>
+</body>
+</html>
