@@ -69,10 +69,11 @@
     </header>
 
     <nav>
-        <a href="#config">Configuration</a>
+        <a href="#configuration">Configuration</a>
         <a href="#zone-files">Zone Files</a>
-        <a href="#commands">Commands</a>
+        <a href="#system-management">System Management</a>
         <a href="#rndc">RNDC Utility</a>
+        <a href="#security">Security</a>
     </nav>
 
     <div class="container">
@@ -80,48 +81,117 @@
             <h2>Resources</h2>
             <p>Useful links for DNS configuration and BIND documentation.</p>
             <ul>
-                <li><a href="https://www.isc.org/bind/">ISC BIND Documentation</a></li>
-                <li><a href="https://www.dnscheck.co/">DNS Check Tool</a></li>
+                <li><a href="https://www.isc.org/bind/" target="_blank">ISC BIND Documentation</a></li>
+                <li><a href="https://www.dnscheck.co/" target="_blank">DNS Check Tool</a></li>
             </ul>
         </div>
 
         <div class="main-content">
-            <section id="config">
-                <h2>DNS Server Configuration</h2>
-                <p>The main BIND configuration file is <code>/etc/named.conf</code>. Here's an overview of key settings:</p>
+            <section id="configuration">
+                <h2>/etc/named.conf Configuration</h2>
                 <ul>
-                    <li><code>listen-on port 53 { 127.0.0.1; };</code> - Defines where the server listens for requests.</li>
-                    <li><code>directory "/var/named";</code> - Specifies the directory for zone files.</li>
-                    <li><code>allow-query { localhost; };</code> - Restricts which clients can query the DNS server.</li>
-                    <li><code>dnssec-enable yes;</code> - Enables DNSSEC for security.</li>
+                    <li><code>listen-on port 53 { 127.0.0.1; };</code> - Server listening on a specific IP and port.</li>
+                    <li><code>directory "/var/named";</code> - Default directory for zone files.</li>
+                    <li><code>allow-query { localhost; };</code> - Defines allowed hosts or networks to query the server.</li>
+                    <li><code>allow-transfer { localhost; };</code> - Controls DNS zone transfers.</li>
+                    <li><code>recursion yes;</code> - Enables DNS recursion.</li>
+                    <li><code>dnssec-enable yes;</code> - Activates DNS security for the cache.</li>
+                    <li><code>dnssec-validation yes;</code> - Enables DNSSEC validation.</li>
+                    <li>To include additional zone files, use <code>include "/etc/named.test.zones";</code></li>
                 </ul>
+            </section>
+
+            <section id="system-management">
+                <h2>System Management</h2>
+                <p>To manage BIND on SysVinit systems:</p>
+                <pre><code>chkconfig --list | grep named
+chkconfig --level [runlevel] named on
+service named start
+service named status</code></pre>
+                <p>For SystemD systems, use:</p>
+                <pre><code>systemctl start named
+systemctl enable named
+systemctl status named</code></pre>
+                <p>Commands to check DNS resolution:</p>
+                <pre><code>dig @localhost google.com
+host www.microsoft.com localhost</code></pre>
             </section>
 
             <section id="zone-files">
                 <h2>Zone Files</h2>
-                <p>Zone files contain DNS record definitions. Define your forward and reverse zones in <code>/etc/named.conf</code>:</p>
-                <pre><code>zone "example.com" {
-    type master;
-    file "example.com.db";
-};</code></pre>
-                <p>Ensure zone files are stored in the directory defined in the configuration.</p>
-            </section>
+                <p>Zone files contain DNS record definitions. Below are examples for forward and reverse lookup zones:</p>
+                <h3>Forward Lookup Zone</h3>
+                <pre><code>$TTL 86400
+@       IN      SOA     maindc.ospx.local.       root.ospx.local. (
+                                10031           ;Serial
+                                3600            ;Refresh
+                                1800            ;Retry
+                                604800          ;Expire
+                                86400           ;Minimum TTL
+)
+; Name Server
+@       IN      NS      maindc.ospx.local.
+; A RECORDS
+maindc          IN      A     10.160.99.12
+esxi1           IN      A     10.160.99.11
+test            IN      A     10.160.99.23</code></pre>
 
-            <section id="commands">
-                <h2>Useful Commands</h2>
-                <p>Use these commands to manage BIND and check DNS resolutions:</p>
-                <ul>
-                    <li><code>dig @localhost example.com</code> - Test DNS resolution.</li>
-                    <li><code>rndc reload</code> - Reload the DNS server.</li>
-                    <li><code>named-checkzone</code> - Validate zone files.</li>
-                </ul>
+                <h3>Reverse Lookup Zone</h3>
+                <pre><code>$TTL 86400
+@       IN      SOA     maindc.ospx.local.       root.ospx.local. (
+                                10031           ;Serial
+                                3600            ;Refresh
+                                1800            ;Retry
+                                604800          ;Expire
+                                86400           ;Minimum TTL
+)
+; NAME SERVER
+@       IN      NS      maindc.ospx.local.
+; PTR RECORDS
+12      IN      PTR     maindc.ospx.local.
+11      IN      PTR     esxi1.ospx.local.</code></pre>
+
+                <p>To add these zones to BIND, define them in <code>/etc/named.conf</code> as follows:</p>
+                <pre><code>zone "test.local" {
+    type master;
+    file "test.local.db";
+};
+
+zone "11.160.10.in-addr.arpa" {
+    type master;
+    file "11.160.10.db";
+};</code></pre>
             </section>
 
             <section id="rndc">
                 <h2>RNDC Utility</h2>
-                <p>RNDC is used to control the BIND server. To generate a key for RNDC:</p>
+                <p>RNDC is a utility to control BIND. To generate a key for RNDC:</p>
                 <pre><code>rndc-confgen -r /dev/urandom -a</code></pre>
-                <p>Ensure to include the RNDC key in <code>/etc/named.conf</code> for proper integration.</p>
+                <p>Include the generated key in <code>/etc/named.conf</code> to connect RNDC and BIND. You may also need to change file permissions for security:</p>
+                <pre><code>chgrp named /etc/rndc.conf
+chmod 640 /etc/rndc.conf</code></pre>
+                <p>Common RNDC commands include:</p>
+                <ul>
+                    <li><code>rndc reload</code> - Reloads BIND.</li>
+                    <li><code>rndc flush</code> - Flushes all DNS caches.</li>
+                    <li><code>rndc flushname [domain]</code> - Flushes a specific domain from the cache.</li>
+                </ul>
+            </section>
+
+            <section id="security">
+                <h2>Securing BIND with Chroot</h2>
+                <p>Chrooting BIND adds security by isolating the service from the rest of the system. To set up a chroot jail:</p>
+                <ul>
+                    <li>Install the BIND chroot package: <code>yum install bind-chroot</code></li>
+                    <li>Set the chroot path in <code>/etc/sysconfig/named</code> with: <code>-t /chroot/named</code></li>
+                    <li>Create necessary directories:</li>
+                    <pre><code>mkdir /chroot/ /chroot/named /chroot/var/named
+cp /etc/named.conf /chroot/named/etc
+cp -rf /var/named/* /chroot/named/var/named</code></pre>
+                    <li>Adjust file ownership and permissions:</li>
+                    <pre><code>chown named:named -R /chroot/named
+chmod 666 /chroot/named/dev/*</code></pre>
+                </ul>
             </section>
         </div>
     </div>
@@ -131,3 +201,4 @@
     </footer>
 </body>
 </html>
+
