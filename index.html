@@ -9,105 +9,116 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* Light gray background */
+            background-color: #f5f5f5;
         }
         .container {
             display: flex;
             justify-content: space-between;
-            max-width: 1200px; /* Adjusted for additional sidebar */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
         .left-sidebar {
             flex: 0 0 200px;
-            background-color: #fff; /* White background */
+            background-color: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .main-content {
-            flex: 1; /* Main content flex-grow to fill remaining space */
+            flex: 1;
             background-color: #fff;
-            padding: 30px; /* Increased padding */
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .right-sidebar {
-            flex: 0 0 200px; /* New sidebar for frequently used links */
-            background-color: #f0f0f0; /* Light gray background */
+            flex: 0 0 200px;
+            background-color: #f0f0f0;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-left: 10px; /* Space between main content and sidebar */
-            text-align: left; /* Align text to the left for readability */
+            margin-left: 10px;
+            text-align: left;
         }
         .right-sidebar ul {
-            list-style-type: none; /* No bullets for list items */
+            list-style-type: none;
             padding: 0;
         }
         .right-sidebar li {
-            padding: 10px; /* Add padding for each list item */
-            border-bottom: 1px solid #ccc; /* Add border between links */
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
         }
         .right-sidebar li:last-child {
-            border-bottom: none; /* Remove border for the last item */
+            border-bottom: none;
         }
         .right-sidebar a {
-            color: #3269a8; /* Blue color for links */
-            text-decoration: none; /* No underline by default */
-            font-weight: normal; /* Normal font weight */
+            color: #3269a8;
+            text-decoration: none;
         }
         .right-sidebar a:hover {
-            color: #ff0000; /* Red hover color */
-            text-decoration: underline; /* Underline on hover */
+            color: #ff0000;
+            text-decoration: underline;
         }
         header {
-            background-color: #3269a8; /* Blue header */
+            background-color: #3269a8;
             color: #fff;
             padding: 20px;
             text-align: center;
         }
+        .header-content {
+            display: flex; /* To align logo and title */
+            justify-content: center; /* Center content */
+            align-items: center; /* Align vertically */
+        }
+        .logo {
+            height: 40px; /* Adjust logo height */
+            margin-right: 10px; /* Spacing between logo and title */
+        }
         nav {
-            background-color: #000000; /* Black navigation */
+            background-color: #000000;
             color: #fff;
-            padding: 15px; /* Increased padding for nav */
+            padding: 15px;
             text-align: center;
         }
         nav a {
-            color: #fff; /* White text color */
+            color: #fff;
             text-decoration: none;
-            margin: 0 15px; /* Spacing between links */
+            margin: 0 15px;
         }
         nav a:hover {
-            color: #3498db; /* Blue hover effect */
+            color: #3498db;
         }
         section {
-            padding: 40px; /* Increased padding */
-            text-align: left; /* Align left for easier reading */
+            padding: 40px;
+            text-align: left;
             margin-bottom: 20px;
         }
         section h2 {
-            color: #ff0000; /* Red header color */
+            color: #ff0000;
             margin-bottom: 20px;
         }
         section p {
-            color: #666; /* Neutral gray for text */
-            line-height: 1.6; /* Better readability */
+            color: #666;
+            line-height: 1.6;
         }
         footer {
-            background-color: #000000; /* Black footer */
+            background-color: #000000;
             color: #fff;
-            padding: 30px; /* Increased padding for footer */
+            padding: 30px;
             text-align: center;
             position: fixed;
             bottom: 0;
-            width: 100%; /* Full-width footer */
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Linux Configuration</h1>
+        <div class="header-content">
+            <img src="Picture1.png" alt="Site Logo" class="logo">
+            <h1>Linux Configuration</h1>
+        </div>
     </header>
 
     <nav>
@@ -168,6 +179,8 @@
         <p>&copy; 2024 Linux Configuration. All rights reserved.</p>
     </footer>
 </body>
+</html>
+
 
 
 
