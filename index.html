@@ -68,12 +68,16 @@
         }
         .header-content {
             display: flex; /* To align logo and title */
+            justify-content: space-between; /* Space between title and logo */
             align-items: center; /* Align vertically */
-            justify-content: flex-start; /* Logo to the left */
+        }
+        .header-title {
+            flex: 1; /* Ensures the title is centered */
+            text-align: center; /* Center title */
         }
         .logo {
-            height: 60px; /* Increased logo height for larger size */
-            margin-right: 20px; /* More space between logo and title */
+            height: 60px; /* Adjust logo height for larger size */
+            margin-right: 20px; /* Space between logo and edge */
         }
         nav {
             background-color: #000000; /* Black navigation */
@@ -115,10 +119,9 @@
 </head>
 <body>
     <header>
-        <div class="header-content"> <!-- Align logo to the left -->
-            <!-- Add your logo image here -->
-            <img src="Picture1.png" alt="Site Logo" class="logo"> <!-- Larger logo -->
-            <h1>Linux Configuration</h1> <!-- Header title -->
+        <div class="header-content">
+            <h1 class="header-title">Linux Configuration</h1> <!-- Header title centered -->
+            <img src="Picture1.png" alt="Site Logo" class="logo"> <!-- Logo on the right -->
         </div>
     </header>
 
@@ -182,6 +185,7 @@
     </footer>
 </body>
 </html>
+
 
 
 
