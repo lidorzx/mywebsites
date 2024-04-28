@@ -6,7 +6,7 @@
     <title>Linux Configurations</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Clean, modern font */
             margin: 0;
             padding: 0;
             background-color: #f5f5f5; /* Light gray background */
@@ -18,99 +18,102 @@
             margin: 0 auto;
             padding: 20px;
         }
+        header {
+            background-color: #003366; /* Dark blue for an official look */
+            color: #fff;
+            padding: 20px;
+            display: flex; /* Flexbox for layout */
+            justify-content: space-between; /* Space between logo and title */
+            align-items: center; /* Align vertically */
+        }
+        .logo {
+            height: 60px; /* Height for the logo */
+            margin-right: 20px; /* Space between logo and edge */
+        }
+        .header-title {
+            flex: 1; /* Ensures the title is centered */
+            text-align: center; /* Center title */
+            font-size: 1.5em; /* Larger title font */
+        }
+        nav {
+            background-color: #004080; /* Dark blue for nav */
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em; /* Larger font for readability */
+        }
+        nav a {
+            color: #fff; /* White text color */
+            text-decoration: none;
+            margin: 0 15px; /* Spacing between links */
+            transition: color 0.3s; /* Smooth transition on hover */
+        }
+        nav a:hover {
+            color: #ffcc00; /* Gold color for hover effect */
+        }
         .left-sidebar {
             flex: 0 0 200px;
             background-color: #fff; /* White background */
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px; /* Smooth corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
         }
         .main-content {
             flex: 1; /* Main content flex-grow to fill remaining space */
             background-color: #fff;
             padding: 30px; /* Increased padding */
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
         }
         .right-sidebar {
-            flex: 0 0 200px; /* New sidebar for frequently used links */
-            background-color: #f0f0f0;
+            flex: 0 0 200px; /* Sidebar for frequently used links */
+            background-color: #f0f0f0; /* Light gray background */
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px; /* Smooth corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
             margin-left: 10px; /* Space between main content and sidebar */
-            text-align: left; /* Align text to the left for readability */
+            text-align: left; /* Align text to the left */
         }
         .right-sidebar ul {
             list-style-type: none; /* No bullets for list items */
             padding: 0;
         }
         .right-sidebar li {
-            padding: 10px; /* Add padding for each list item */
-            border-bottom: 1px solid #ccc; /* Add border between links */
+            padding: 10px; /* Padding for each list item */
+            border-bottom: 1px solid #ccc; /* Border between links */
         }
         .right-sidebar li:last-child {
-            border-bottom: none; /* Remove border for the last item */
+            border-bottom: none; /* No border for the last item */
         }
         .right-sidebar a {
             color: #3269a8; /* Blue color for links */
             text-decoration: none;
+            transition: color 0.3s; /* Smooth transition on hover */
         }
         .right-sidebar a:hover {
             color: #ff0000; /* Red hover color */
             text-decoration: underline; /* Underline on hover */
         }
-        header {
-            background-color: #3269a8; /* Blue header */
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        .header-content {
-            display: flex; /* To align logo and title */
-            justify-content: space-between; /* Space between title and logo */
-            align-items: center; /* Align vertically */
-        }
-        .header-title {
-            flex: 1; /* Ensures the title is centered */
-            text-align: center; /* Center title */
-        }
-        .logo {
-            height: 60px; /* Adjust logo height for larger size */
-            margin-right: 20px; /* Space between logo and edge */
-        }
-        nav {
-            background-color: #000000; /* Black navigation */
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-        }
-        nav a {
-            color: #fff; /* White text color */
-            text-decoration: none;
-            margin: 0 15px; /* Spacing between links */
-        }
-        nav a:hover {
-            color: #3498db; /* Blue hover effect */
-        }
         section {
             padding: 40px; /* Increased padding */
-            text-align: left; /* Align left for easier reading */
-            margin-bottom: 20px;
+            text-align: left; /* Align left for readability */
+            margin-bottom: 20px; /* Space between sections */
         }
         section h2 {
-            color: #ff0000; /* Red header color */
+            color: #003366; /* Dark blue for headings */
             margin-bottom: 20px;
+            font-size: 1.5em; /* Larger heading font */
         }
         section p {
             color: #666; /* Neutral gray for text */
-            line-height: 1.6; /* Better readability */
+            line-height: 1.6; /* Improved readability */
         }
         footer {
-            background-color: #000000; /* Black footer */
+            background-color: #003366; /* Dark blue for footer */
             color: #fff;
-            padding: 30px; /* Increased padding for footer */
+            padding: 30px; /* Increased padding */
             text-align: center;
+            font-size: 1em; /* Standard font size */
             position: fixed;
             bottom: 0;
             width: 100%; /* Full-width footer */
@@ -119,9 +122,9 @@
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <h1 class="header-title">Linux Configuration</h1> <!-- Header title centered -->
+        <div class="header-content"> <!-- Align logo and title -->
             <img src="Picture1.png" alt="Site Logo" class="logo"> <!-- Logo on the right -->
+            <h1 class="header-title">Linux Configuration</h1> <!-- Header title centered -->
         </div>
     </header>
 
@@ -185,6 +188,7 @@
     </footer>
 </body>
 </html>
+
 
 
 
