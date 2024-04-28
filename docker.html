@@ -146,7 +146,9 @@ vi Dockerfile</code></pre>
                 <pre><code>FROM nginx
 WORKDIR /usr/share/nginx/html
 COPY index.html ./</code></pre>
-
+<p>vi index.html:</p>
+<p> add html content and than you can build a docker container using nginx:</p>
+ 
                 <p>To build and run a Docker container with this Dockerfile:</p>
                 <pre><code>Docker build . -t la/static:latest
 Docker run -d --name=static-site -p 80:80 la/static:latest</code></pre>
