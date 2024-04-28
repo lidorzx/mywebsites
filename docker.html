@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Configurations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light gray background */
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 0 0 200px;
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1;
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #3269a8;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            color: #3498db;
+        }
+        section {
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        section h2 {
+            color: #ff0000;
+            margin-bottom: 20px;
+        }
+        section p {
+            color: #666;
+            line-height: 1.6;
+        }
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linux Configuration</h1>
+    </header>
+    <nav>
+        <a href="http://lidorzx.github.io/mywebsites/home.html">Home</a>
+        <a href="http://privategpt.tlv.local:3000" target="_blank">PrivateGPT</a>
+        <a href="https://nextcloud.tlv.local" target="_blank">NextCloud</a>
+        <a href="https://lidorzx.github.io/mywebsites/dns.html" target="_blank">DNS </a>
+	<a href="https://lidorzx.github.io/mywebsites/dhcp.html" target="_blank">DHCP </a>
+	<a href="https://lidorzx.github.io/mywebsites/openssl.html" target="_blank">OpenSSL </a>
+	<a href="http://lidorzx.github.io/mywebsites/nfs.html">NFS</a>
+	<a href="http://lidorzx.github.io/mywebsites/samba.html">SAMBA</a>
+        <a href="#docker">Docker</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Docker Resources</h2>
+            <ul>
+                <li><a href="https://docs.docker.com/" target="_blank">Docker Documentation</a></li>
+                <li><a href="https://hub.docker.com/" target="_blank">Docker Hub</a></li>
+            </ul>
+        </div>
+	
+        <div class="main-content">
+            <section id="docker">
+                <h2>Docker Commands and Setup</h2>
+                <p>Here is a list of common Docker commands:</p>
+                <ul>
+                    <li>Docker attach: Access a Docker machine.</li>
+                    <li>Docker build: Build an image from a Dockerfile.</li>
+                    <li>Docker exec: Run a command in a running container.</li>
+                    <li>Docker images: List images.</li>
+                    <li>Docker info: Display system-wide information.</li>
+                    <li>Docker inspect: Return low-level information about Docker objects.</li>
+                    <li>Docker logs: Fetch logs of a container.</li>
+                    <li>Docker network: Manage networks.</li>
+                    <li>Docker node: Manage swarm nodes.</li>
+                    <li>Docker ps: List containers.</li>
+                    <li>Docker pull: Pull an image or repository from a registry.</li>
+                    <li>Docker push: Push an image or repository to a registry.</li>
+                    <li>Docker restart: Restart one or more containers.</li>
+                    <li>Docker rm: Remove one or more containers.</li>
+                    <li>Docker rmi: Remove one or more images.</li>
+                    <li>Docker run: Run a command in a new container.</li>
+                    <li>Docker start: Start one or more stopped containers.</li>
+                    <li>Docker stop: Stop one or more running containers.</li>
+                    <li>Docker swarm: Manages Swarm.</li>
+                    <li>Docker volume: Manage volumes.</li>
+                </ul>
+                <h3>Building and Running Docker Containers</h3>
+                <pre><code>mkdir -p docker/images
+cd docker/images
+vi Dockerfile</code></pre>
+                <p>An example Dockerfile to create a simple static site:</p>
+                <pre><code>FROM nginx
+WORKDIR /usr/share/nginx/html
+COPY index.html ./</code></pre>
+                <p>To build and run a Docker container:</p>
+                <pre><code>Docker build . -t la/static:latest
+Docker run -d --name=static-site -p 80:80 la/static:latest</code></pre>
+                <p>To view running processes:</p>
+                <pre><code>Docker ps</code></pre>
+
+                <h3>Docker Overview</h3>
+                <p>Docker is a container management system designed to simplify the creation, deployment, and execution of applications using containers. Containers are lightweight, require no hypervisor, and can run on any Linux machine.</p>
+                <ul>
+                    <li>Docker engine is a client-server application with a daemon server, REST API, and CLI client.</li>
+                    <li>Docker images are built from a series of layers representing instructions from a Dockerfile.</li>
+                    <li>Containers create a writable layer on top of underlying image layers.</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="sidebar">
+            <h2>ChatGPT</h2>
+	    <a href="https://chat.openai.com/" target="_blank">ChatGPT</a>
+	    <p>Easy use for anything you need!</p> 
+	 </div>
+
+    </div>
+    <footer>
+        <p>&copy; 2024 Linux Configuration. All rights reserved.</p>
+    </footer>
+</body>
+</html>
