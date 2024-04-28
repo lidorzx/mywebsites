@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Configurations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light gray background */
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px; /* Width for the main content */
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sidebar {
+            flex: 0 0 200px; /* Sidebar width */
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1; /* Main content flex-grow to fill remaining space */
+            background-color: #fff;
+            padding: 30px; /* Increased padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            background-color: #3269a8; /* Blue header */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #000000; /* Black navigation */
+            color: #fff;
+            padding: 15px; /* Increased padding for nav */
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px; /* Spacing between links */
+        }
+        nav a:hover {
+            color: #3498db; /* Blue hover effect */
+        }
+        section {
+            padding: 40px; /* Increased padding */
+            text-align: left; /* Align left for easier reading */
+            margin-bottom: 20px;
+        }
+        section h2 {
+            color: #ff0000; /* Red header color */
+            margin-bottom: 20px;
+        }
+        section p {
+            color: #666; /* Neutral gray text */
+            line-height: 1.6; /* Improved readability */
+        }
+        footer {
+            background-color: #000000; /* Black footer */
+            color: #fff;
+            padding: 30px; /* Increased padding for footer */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%; /* Full width footer */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linux Configuration</h1>
+    </header>
+
+    <nav>
+        <a href="http://lidorzx.github.io/mywebsites/home.html">Home</a>
+        <a href="http://privategpt.tlv.local:3000" target="_blank">PrivateGPT</a>
+        <a href="https://nextcloud.tlv.local" target="_blank">NextCloud</a>
+        <a href="https://lidorzx.github.io/mywebsites/dns.html" target="_blank">DNS</a>
+        <a href="https://lidorzx.github.io/mywebsites/dhcp.html" target="_blank">DHCP</a>
+        <a href="https://lidorzx.github.io/mywebsites/openssl.html" target="_blank">OpenSSL</a>
+        <a href="http://lidorzx.github.io/mywebsites/nfs.html">NFS</a>
+        <a href="http://lidorzx.github.io/mywebsites/samba.html">SAMBA</a>
+        <a href="http://lidorzx.github.io/mywebsites/docker.html">Docker</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Useful Links</h2>
+            <ul>
+                <li><a href="https://docs.docker.com/" target="_blank">Docker Documentation</a></li>
+                <li><a href="https://docs.nextcloud.com/" target="_blank">NextCloud Documentation</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <section id="install-lamp">
+                <h2>Step 1: Install LAMP Stack</h2>
+                <p>Before starting, a LAMP stack must be installed on your server. Use the following command:</p>
+                <pre><code>dnf update -y
+dnf install httpd mariadb-server php php-curl php-gd php-intl php-json php-ldap php-mbstring php-mysqlnd php-xml php-zip php-opcache unzip curl -y</code></pre>
+                <p>After the installation, start and enable the Apache and MariaDB services to start after a reboot:</p>
+                <pre><code>systemctl start httpd
+systemctl enable httpd
+systemctl start mariadb
+systemctl enable mariadb</code></pre>
+            </section>
+
+            <section id="create-db">
+                <h2>Step 2: Create a Database and User for NextCloud</h2>
+                <p>First, secure the MariaDB installation with the following command:</p>
+                <pre><code>mysql_secure_installation</code></pre>
+                <p>Answer the following questions to set up the root password and remove unwanted users:</p>
+                <ul>
+                    <li>Enter current password for root (enter for none): [Leave blank]</li>
+                    <li>Set root password? [Y/n]: Y</li>
+                    <li>New password: [Your password]</li>
+                    <li>Re-enter new password: [Your password]</li>
+                    <li>Remove anonymous users? [Y/n]: Y</li>
+                    <li>Disallow root login remotely? [Y/n]: Y</li>
+                    <li>Remove test database and access to it? [Y/n]: Y</li>
+                    <li>Reload privilege tables now? [Y/n]: Y</li>
+                </ul>
+                <p>Next, create a database and user for NextCloud:</p>
+                <pre><code>mysql -u root -p
+CREATE DATABASE nextcloud;
+CREATE USER 'nextcloud'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'%';
+FLUSH PRIVILEGES;
+EXIT;</code></pre>
+            </section>
+
+            <section id="install-nextcloud">
+                <h2>Step 3: Install NextCloud</h2>
+                <p>Download the latest version of NextCloud and extract it to the Apache web root:</p>
+                <pre><code>wget https://download.nextcloud.com/server/releases/latest-21.zip
+unzip latest-21.zip -d /var/www/html/</code></pre>
+                <p>Create a data directory and set proper ownership:</p>
+                <pre><code>mkdir -p /var/www/html/nextcloud/data
+chown -R apache:apache /var/www/html/nextcloud/</code></pre>
+            </section>
+
+            <section id="apache-config">
+                <h2>Step 4: Create an Apache Virtual Host Configuration</h2>
+                <p>Create a virtual host configuration for NextCloud:</p>
+                <pre><code>nano /etc/httpd/conf.d/nextcloud.conf</code></pre>
+                <p>Add the following code:</p>
+                <pre><code>&lt;VirtualHost *:80&gt;
+    ServerName nextcloud.yourdomain.com
+    DocumentRoot /var/www/html/nextcloud
+    ErrorLog /var/log/httpd/nextcloud_error.log
+    CustomLog /var/log/httpd/nextcloud_requests.log combined
+&lt;/VirtualHost&gt;</code></pre>
+                <p>Restart Apache to apply the changes:</p>
+                <pre><code>systemctl restart httpd
+systemctl status httpd</code></pre>
+            </section>
+
+            <section id="firewall">
+                <h2>Step 5: Configure Firewall</h2>
+                <p>If firewalld is running, allow port 80 through the firewall:</p>
+                <pre><code>firewall-cmd --add-port=80/tcp --zone=public --permanent
+firewall-cmd --reload</code></pre>
+            </section>
+
+            <section id="access-nextcloud">
+                <h2>Step 6: Access NextCloud</h2>
+                <p>Access NextCloud from your browser. If you encounter a PHP version error, follow these steps:</p>
+                <pre><code>yum module list php
+yum module reset php
+yum module enable php:7.3 -y
+yum install -y php php-cli php-common</code></pre>
+            </section>
+        </div>
+
+        <div class="sidebar">
+            <h2>PrivateGPT</h2>
+            <p>This PrivateGPT is based on the Ollama model, trained on more than 7 billion parameters!</p>
+
+            <div class="sidebar">
+                <h2>ChatGPT</h2>
+                <a href="https://chat.openai.com/" target="_blank">ChatGPT</a>
+                <p> Easy to use for anything you need!</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Linux Configuration. All rights reserved.</p>
+    </footer>
+</body>
+</html>
