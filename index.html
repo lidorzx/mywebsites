@@ -9,115 +9,116 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f5f5f5; /* Light gray background */
         }
         .container {
             display: flex;
             justify-content: space-between;
-            max-width: 1200px;
+            max-width: 1200px; /* Adjusted for additional sidebar */
             margin: 0 auto;
             padding: 20px;
         }
         .left-sidebar {
             flex: 0 0 200px;
-            background-color: #fff;
+            background-color: #fff; /* White background */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .main-content {
-            flex: 1;
+            flex: 1; /* Main content flex-grow to fill remaining space */
             background-color: #fff;
-            padding: 30px;
+            padding: 30px; /* Increased padding */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .right-sidebar {
-            flex: 0 0 200px;
+            flex: 0 0 200px; /* New sidebar for frequently used links */
             background-color: #f0f0f0;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-left: 10px;
-            text-align: left;
+            margin-left: 10px; /* Space between main content and sidebar */
+            text-align: left; /* Align text to the left for readability */
         }
         .right-sidebar ul {
-            list-style-type: none;
+            list-style-type: none; /* No bullets for list items */
             padding: 0;
         }
         .right-sidebar li {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
+            padding: 10px; /* Add padding for each list item */
+            border-bottom: 1px solid #ccc; /* Add border between links */
         }
         .right-sidebar li:last-child {
-            border-bottom: none;
+            border-bottom: none; /* Remove border for the last item */
         }
         .right-sidebar a {
-            color: #3269a8;
+            color: #3269a8; /* Blue color for links */
             text-decoration: none;
         }
         .right-sidebar a:hover {
-            color: #ff0000;
-            text-decoration: underline;
+            color: #ff0000; /* Red hover color */
+            text-decoration: underline; /* Underline on hover */
         }
         header {
-            background-color: #3269a8;
+            background-color: #3269a8; /* Blue header */
             color: #fff;
             padding: 20px;
             text-align: center;
         }
         .header-content {
             display: flex; /* To align logo and title */
-            justify-content: center; /* Center content */
             align-items: center; /* Align vertically */
+            justify-content: flex-start; /* Logo to the left */
         }
         .logo {
-            height: 40px; /* Adjust logo height */
-            margin-right: 10px; /* Spacing between logo and title */
+            height: 60px; /* Increased logo height for larger size */
+            margin-right: 20px; /* More space between logo and title */
         }
         nav {
-            background-color: #000000;
+            background-color: #000000; /* Black navigation */
             color: #fff;
             padding: 15px;
             text-align: center;
         }
         nav a {
-            color: #fff;
+            color: #fff; /* White text color */
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 15px; /* Spacing between links */
         }
         nav a:hover {
-            color: #3498db;
+            color: #3498db; /* Blue hover effect */
         }
         section {
-            padding: 40px;
-            text-align: left;
+            padding: 40px; /* Increased padding */
+            text-align: left; /* Align left for easier reading */
             margin-bottom: 20px;
         }
         section h2 {
-            color: #ff0000;
+            color: #ff0000; /* Red header color */
             margin-bottom: 20px;
         }
         section p {
-            color: #666;
-            line-height: 1.6;
+            color: #666; /* Neutral gray for text */
+            line-height: 1.6; /* Better readability */
         }
         footer {
-            background-color: #000000;
+            background-color: #000000; /* Black footer */
             color: #fff;
-            padding: 30px;
+            padding: 30px; /* Increased padding for footer */
             text-align: center;
             position: fixed;
             bottom: 0;
-            width: 100%;
+            width: 100%; /* Full-width footer */
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <img src="Picture1.png" alt="Site Logo" class="logo">
-            <h1>Linux Configuration</h1>
+        <div class="header-content"> <!-- Align logo to the left -->
+            <!-- Add your logo image here -->
+            <img src="your_logo.png" alt="Site Logo" class="logo"> <!-- Larger logo -->
+            <h1>Linux Configuration</h1> <!-- Header title -->
         </div>
     </header>
 
@@ -180,6 +181,7 @@
     </footer>
 </body>
 </html>
+
 
 
 
