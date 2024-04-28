@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0; /* Light gray background */
+            background-color: #f5f5f5; /* Light gray background */
         }
         .container {
             display: flex;
@@ -34,12 +34,12 @@
         }
         .right-sidebar {
             flex: 0 0 200px; /* New sidebar for frequently used links */
-            background-color: #3269a8; /* Light gray background */
+            background-color: #f0f0f0; /* Light gray background */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-left: 10px; /* Space between main content and sidebar */
-            text-align: center; /* Centered text for consistent alignment */
+            text-align: left; /* Align text to the left for readability */
         }
         .right-sidebar ul {
             list-style-type: none; /* No bullets for list items */
@@ -47,18 +47,18 @@
         }
         .right-sidebar li {
             padding: 10px; /* Add padding for each list item */
-            border-bottom: 1px solid #d0d0d0; /* Add border between links */
+            border-bottom: 1px solid #ccc; /* Add border between links */
         }
         .right-sidebar li:last-child {
-            border-bottom: none; /* Remove border for last item */
+            border-bottom: none; /* Remove border for the last item */
         }
         .right-sidebar a {
             color: #3269a8; /* Blue color for links */
-            text-decoration: none;
-            font-weight: bold;
+            text-decoration: none; /* No underline by default */
+            font-weight: normal; /* Normal font weight */
         }
         .right-sidebar a:hover {
-            color: #ff0000; /* Red hover color for emphasis */
+            color: #ff0000; /* Red hover color */
             text-decoration: underline; /* Underline on hover */
         }
         header {
@@ -74,12 +74,12 @@
             text-align: center;
         }
         nav a {
-            color: #fff;
+            color: #fff; /* White text color */
             text-decoration: none;
             margin: 0 15px; /* Spacing between links */
         }
         nav a:hover {
-            color: #3498db; /* Hover effect */
+            color: #3498db; /* Blue hover effect */
         }
         section {
             padding: 40px; /* Increased padding */
@@ -155,7 +155,7 @@
         </div>
         
         <div class="right-sidebar"> <!-- New right sidebar with links -->
-            <h2>Tools :</h2>
+            <h2>Useful Tools</h2>
             <ul>
                 <li><a href="https://ucshcltool.cloudapps.cisco.com/public/" target="_blank">Cisco UCS Hardware Compatibility Tool</a></li>
                 <li><a href="https://www.cisco.com/c/en/us/support/index.html" target="_blank">Cisco Support</a></li>
@@ -168,7 +168,7 @@
         <p>&copy; 2024 Linux Configuration. All rights reserved.</p>
     </footer>
 </body>
-</html>
+
 
 
 
