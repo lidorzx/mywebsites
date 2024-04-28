@@ -14,72 +14,94 @@
         .container {
             display: flex;
             justify-content: space-between;
-            max-width: 1400px; /* Expanded content area */
+            max-width: 1200px; /* Adjusted for additional sidebar */
             margin: 0 auto;
-            padding: 20px 40px; /* More space for content */
+            padding: 20px;
         }
-        .sidebar {
-            flex: 0 0 250px; /* Wider sidebar */
+        .left-sidebar {
+            flex: 0 0 200px;
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            flex: 1; /* Main content flex-grow to fill remaining space */
             background-color: #fff;
             padding: 30px; /* Increased padding */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .main-content {
-            flex: 1;
-            background-color: #fff;
-            padding: 40px; /* Expanded padding */
+        .right-sidebar {
+            flex: 0 0 200px; /* New sidebar for frequently used links */
+            background-color: #e0e0e0; /* Light gray background */
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 10px; /* Space between main content and sidebar */
+            text-align: center; /* Centered text for consistent alignment */
+        }
+        .right-sidebar ul {
+            list-style-type: none; /* No bullets for list items */
+            padding: 0;
+        }
+        .right-sidebar li {
+            padding: 10px; /* Add padding for each list item */
+            border-bottom: 1px solid #d0d0d0; /* Add border between links */
+        }
+        .right-sidebar li:last-child {
+            border-bottom: none; /* Remove border for last item */
+        }
+        .right-sidebar a {
+            color: #3269a8; /* Blue color for links */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .right-sidebar a:hover {
+            color: #ff0000; /* Red hover color for emphasis */
+            text-decoration: underline; /* Underline on hover */
         }
         header {
-            background-color: #3269a8;
+            background-color: #3269a8; /* Blue header */
             color: #fff;
-            padding: 30px; /* More space in header */
+            padding: 20px;
             text-align: center;
         }
         nav {
-            background-color: #000000;
+            background-color: #000000; /* Black navigation */
             color: #fff;
-            padding: 15px; /* Increased padding for navigation */
+            padding: 15px; /* Increased padding for nav */
             text-align: center;
         }
         nav a {
             color: #fff;
             text-decoration: none;
-            margin: 0 15px; /* More space between links */
+            margin: 0 15px; /* Spacing between links */
         }
         nav a:hover {
-            color: #3498db; /* Changed hover color */
+            color: #3498db; /* Hover effect */
         }
         section {
-            padding: 50px; /* More space within sections */
-            text-align: left; /* Changed alignment for easier reading */
-            margin-bottom: 30px; /* Expanded space between sections */
+            padding: 40px; /* Increased padding */
+            text-align: left; /* Align left for easier reading */
+            margin-bottom: 20px;
         }
         section h2 {
-            color: #ff0000; /* Red for section headers */
+            color: #ff0000; /* Red header color */
             margin-bottom: 20px;
         }
         section p {
             color: #666; /* Neutral gray for text */
             line-height: 1.6; /* Better readability */
         }
-        iframe {
-            width: 100%; /* Expanded iframe width */
-            height: 400px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
         footer {
-            background-color: #000000;
+            background-color: #000000; /* Black footer */
             color: #fff;
-            padding: 30px; /* Expanded padding in footer */
+            padding: 30px; /* Increased padding for footer */
             text-align: center;
             position: fixed;
             bottom: 0;
-            width: 100%;
+            width: 100%; /* Full-width footer */
         }
     </style>
 </head>
@@ -87,24 +109,25 @@
     <header>
         <h1>Linux Configuration</h1>
     </header>
+
     <nav>
         <a href="http://lidorzx.github.io/mywebsites/home.html">Home</a>
+        <a href="http://privategpt.tlv.local:3000" target="_blank">PrivateGPT</a>
+        <a href="https://nextcloud.tlv.local" target="_blank">NextCloud</a>
         <a href="https://lidorzx.github.io/mywebsites/dns.html" target="_blank">DNS</a>
-	<a href="https://lidorzx.github.io/mywebsites/dhcp.html" target="_blank">DHCP</a>
-	<a href="https://lidorzx.github.io/mywebsites/openssl.html" target="_blank">OpenSSL</a>
-	<a href="http://lidorzx.github.io/mywebsites/nfs.html">NFS</a>
-	<a href="http://lidorzx.github.io/mywebsites/samba.html">SAMBA</a>
-	<a href="http://lidorzx.github.io/mywebsites/docker.html">Docker</a>
-    	<a href="http://lidorzx.github.io/mywebsites/nextcloud.html">Nextcloud</a>
-
+        <a href="https://lidorzx.github.io/mywebsites/dhcp.html" target="_blank">DHCP</a>
+        <a href="https://lidorzx.github.io/mywebsites/openssl.html" target="_blank">OpenSSL</a>
+        <a href="http://lidorzx.github.io/mywebsites/nfs.html">NFS</a>
+        <a href="http://lidorzx.github.io/mywebsites/samba.html">SAMBA</a>
+        <a href="http://lidorzx.github.io/mywebsites/docker.html">Docker</a>
     </nav>
 
     <div class="container">
-        <div class="sidebar">
+        <div class="left-sidebar">
             <h2>NextCloud</h2>
             <p>NextCloud is open for more than 1TB of space to upload your content.</p>
         </div>
-	
+        
         <div class="main-content">
             <section id="home">
                 <h2>Welcome to Linux Configurations</h2>
@@ -130,17 +153,14 @@
                 <p>For inquiries, visit our <a href="#contact-page">contact page</a>.</p>
             </section>
         </div>
-
-        <div class="sidebar">
-            <h2>PrivateGPT</h2>
-            <p>This PrivateGPT is based on the Ollama model, trained on more than 7 billion parameters!</p>
-
-            <div class="sidebar">
-                <h2>ChatGPT</h2>
-                <a href="https://chat.openai.com/" target="_blank">ChatGPT</a>
-                <p> Easy to use for anything you need!</p>
-            </div>
-
+        
+        <div class="right-sidebar"> <!-- New right sidebar with links -->
+            <h2>Frequently Used Links</h2>
+            <ul>
+                <li><a href="https://ucshcltool.cloudapps.cisco.com/public/" target="_blank">Cisco UCS Hardware Compatibility Tool</a></li>
+                <li><a href="https://www.cisco.com/c/en/us/support/index.html" target="_blank">Cisco Support</a></li>
+                <li><a href="https://www.redhat.com/en/resources" target="_blank">Red Hat Resources</a></li>
+            </ul>
         </div>
     </div>
 
@@ -149,5 +169,6 @@
     </footer>
 </body>
 </html>
+
 
 
