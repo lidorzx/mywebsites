@@ -14,59 +14,59 @@
         .container {
             display: flex;
             justify-content: space-between;
-            max-width: 1200px;
+            max-width: 1400px; /* Expanded content area */
             margin: 0 auto;
-            padding: 20px;
+            padding: 20px 40px; /* More space for content */
         }
         .sidebar {
-            flex: 0 0 200px;
-            background-color: #fff; /* White background */
-            padding: 20px;
+            flex: 0 0 250px; /* Wider sidebar */
+            background-color: #fff;
+            padding: 30px; /* Increased padding */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .main-content {
             flex: 1;
-            background-color: #fff; /* White background */
-            padding: 20px;
+            background-color: #fff;
+            padding: 40px; /* Expanded padding */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         header {
             background-color: #3269a8;
             color: #fff;
-            padding: 20px;
+            padding: 30px; /* More space in header */
             text-align: center;
         }
         nav {
             background-color: #000000;
             color: #fff;
-            padding: 10px;
+            padding: 15px; /* Increased padding for navigation */
             text-align: center;
         }
         nav a {
             color: #fff;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 15px; /* More space between links */
         }
         nav a:hover {
-            color: #3498db;
+            color: #3498db; /* Changed hover color */
         }
         section {
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 20px;
+            padding: 50px; /* More space within sections */
+            text-align: left; /* Changed alignment for easier reading */
+            margin-bottom: 30px; /* Expanded space between sections */
         }
         section h2 {
-            color: #ff0000;
+            color: #ff0000; /* Red for section headers */
             margin-bottom: 20px;
         }
         section p {
-            color: #666;
-            line-height: 1.6;
+            color: #666; /* Neutral gray for text */
+            line-height: 1.6; /* Better readability */
         }
         iframe {
-            width: 100%;
+            width: 100%; /* Expanded iframe width */
             height: 400px;
             border: none;
             border-radius: 10px;
@@ -75,7 +75,7 @@
         footer {
             background-color: #000000;
             color: #fff;
-            padding: 20px;
+            padding: 30px; /* Expanded padding in footer */
             text-align: center;
             position: fixed;
             bottom: 0;
@@ -91,65 +91,63 @@
         <a href="http://lidorzx.github.io/mywebsites/home.html">Home</a>
         <a href="http://privategpt.tlv.local:3000" target="_blank">PrivateGPT</a>
         <a href="https://nextcloud.tlv.local" target="_blank">NextCloud</a>
-        <a href="https://lidorzx.github.io/mywebsites/dns.html" target="_blank">DNS </a>
-	<a href="https://lidorzx.github.io/mywebsites/dhcp.html" target="_blank">DHCP </a>
-	<a href="https://lidorzx.github.io/mywebsites/openssl.html" target="_blank">OpenSSL </a>
+        <a href="https://lidorzx.github.io/mywebsites/dns.html" target="_blank">DNS</a>
+	<a href="https://lidorzx.github.io/mywebsites/dhcp.html" target="_blank">DHCP</a>
+	<a href="https://lidorzx.github.io/mywebsites/openssl.html" target="_blank">OpenSSL</a>
 	<a href="http://lidorzx.github.io/mywebsites/nfs.html">NFS</a>
 	<a href="http://lidorzx.github.io/mywebsites/samba.html">SAMBA</a>
 	<a href="http://lidorzx.github.io/mywebsites/docker.html">Docker</a>
-
-
-
-
-
-   
     </nav>
+
     <div class="container">
         <div class="sidebar">
             <h2>NextCloud</h2>
-            <p>NextCloud is open for more than 1TB of space to upload your stuff.</p>
+            <p>NextCloud is open for more than 1TB of space to upload your content.</p>
         </div>
 	
         <div class="main-content">
-      
-		<section id="home">
-                <h2>Welcome to Linux Configurations </h2>
-                <p>Welcome to Linux Configurations, Author : Lidor Eliya </p>
-             <iframe 
-		width="560" 
-                height="315" 
-                src="https://www.youtube.com/embed/42iQKuQodW4" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen> 
-		</iframe>
+            <section id="home">
+                <h2>Welcome to Linux Configurations</h2>
+                <p>Welcome to Linux Configurations, Author: Lidor Eliya.</p>
+                <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/42iQKuQodW4" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
             </section>
+
             <section id="about">
                 <h2>About Us</h2>
-                <p>This Site designed for helping with Linux Configurations. We want to make sure you have a pleasant experience on our website.</p>
+                <p>This site is designed to help with Linux configurations. We want to ensure you have a pleasant experience on our website.</p>
             </section>
+
             <section id="contact">
                 <h2>Contact Us</h2>
                 <p>Get in touch with us!</p>
                 <p>For inquiries, visit our <a href="#contact-page">contact page</a>.</p>
             </section>
         </div>
-       
-	<div class="sidebar">
-            <h2>PrivateGPT</h2>
-            <p>This PrivateGPT is based on ollama Model which was trained on more than 7B Parameters !</p>
 
-	     <div class="sidebar">
-            <h2>ChatGPT</h2>
-	    <a href="https://chat.openai.com/" target="_blank">ChatGPT</a>
-	    <p> Easy use for Anything you need !</p> 
-	 </div>
+        <div class="sidebar">
+            <h2>PrivateGPT</h2>
+            <p>This PrivateGPT is based on the Ollama model, trained on more than 7 billion parameters!</p>
+
+            <div class="sidebar">
+                <h2>ChatGPT</h2>
+                <a href="https://chat.openai.com/" target="_blank">ChatGPT</a>
+                <p> Easy to use for anything you need!</p>
+            </div>
 
         </div>
     </div>
+
     <footer>
-        <p>&copy; 2024 Lidor Linux Configurations. All rights reserved.</p>
+        <p>&copy; 2024 Linux Configuration. All rights reserved.</p>
     </footer>
 </body>
 </html>
+
 
