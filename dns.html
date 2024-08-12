@@ -123,7 +123,7 @@ host www.microsoft.com localhost</code></pre>
                 <p>Zone files contain DNS record definitions. Below are examples for forward and reverse lookup zones:</p>
                 <h3>Forward Lookup Zone</h3>
                 <pre><code>$TTL 86400
-@       IN      SOA     maindc.ospx.local.       root.ospx.local. (
+@       IN      SOA     yourfqdn.       root.domainname.local. (
                                 10031           ;Serial
                                 3600            ;Refresh
                                 1800            ;Retry
@@ -131,15 +131,15 @@ host www.microsoft.com localhost</code></pre>
                                 86400           ;Minimum TTL
 )
 ; Name Server
-@       IN      NS      maindc.ospx.local.
+@       IN      NS      yourfqdn.local.
 ; A RECORDS
-maindc          IN      A     10.160.99.12
-esxi1           IN      A     10.160.99.11
-test            IN      A     10.160.99.23</code></pre>
+maindc          IN      A     x.x.x.x
+esxi1           IN      A     x.x.x.x
+test            IN      A     x.x.x.x
 
                 <h3>Reverse Lookup Zone</h3>
                 <pre><code>$TTL 86400
-@       IN      SOA     maindc.ospx.local.       root.ospx.local. (
+@       IN      SOA     yourfqdn.local.       root.domainname.local. (
                                 10031           ;Serial
                                 3600            ;Refresh
                                 1800            ;Retry
@@ -147,10 +147,10 @@ test            IN      A     10.160.99.23</code></pre>
                                 86400           ;Minimum TTL
 )
 ; NAME SERVER
-@       IN      NS      maindc.ospx.local.
+@       IN      NS      yourfqdn.
 ; PTR RECORDS
-12      IN      PTR     maindc.ospx.local.
-11      IN      PTR     esxi1.ospx.local.</code></pre>
+12      IN      PTR     fqdn.
+11      IN      PTR     fqdn.</code></pre>
 
                 <p>To add these zones to BIND, define them in <code>/etc/named.conf</code> as follows:</p>
                 <pre><code>zone "test.local" {
